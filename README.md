@@ -1,16 +1,16 @@
 # Aiida-Workflow
 
-## What is AiidA?
+## What is AiiDA?
 
 [AiiDA](https://www.aiida.net/index.html) is an open-source Python infrastructure to help researchers automate, manage, persist, share, and reprogram the complex workflows associated with modern computational science and all associated data. It is very helpful framework for high-throughput calculations.
 
-## Why AiidA? 
+## Why AiiDA? 
 We increasingly have access to more computational resources that are capable of handling larger volumes of calculations, and high throughput calculation is more feasible. Imagine having to create, execute, and error-check for over 1000 calculations by "hand". That would be awful! With Aiida, you can automate many of these procedures and use your brain power for analysis, interpretation of results, and drawing conclusions. 
 
 ## AiiDA Quantum ESPRESSO
 Aiida has many plugins for popular software including [VASP](https://aiidateam.github.io/aiida-registry/aiida-vasp), [Gaussian](https://aiidateam.github.io/aiida-registry/aiida-gaussian), and [Wannier90](https://aiidateam.github.io/aiida-registry/aiida-wannier90). There is currently a plugin for [Quantum Espresso](https://aiida-quantumespresso.readthedocs.io/en/latest/) that integrates the Quantum ESPRESSO software suite. Compute a variety of material properties with the popular open-source DFT code with automatic [data provenance](https://www.nnlm.gov/guides/data-glossary/data-provenance#:~:text=Definition,to%20where%20it%20is%20presently) provided by AiiDA. 
 
-## Installing AiidA on a local computer (Mac OS) 
+## Installing AiiDA on a local computer (Mac OS) 
 
 1. Create a conda environment
    
@@ -85,7 +85,7 @@ cd /opt/homebrew/Cellar/rabbitmq/3.13.7/sbin/
 ./rabbitmq-diagnostics status
 ```
 
-7. Call verdi, an [AiidA subcommand](https://aiida.readthedocs.io/projects/aiida-core/en/latest/reference/command_line.html#commands), to check if aiida and rabbitmq are interfacing. Learn more about verdi presto and controlling your installation [here](https://aiida.readthedocs.io/projects/aiida-core/en/latest/reference/command_line.html#reference-command-line-verdi-presto). 
+7. Call verdi, an [AiiDA subcommand](https://aiida.readthedocs.io/projects/aiida-core/en/latest/reference/command_line.html#commands), to check if aiida and rabbitmq are interfacing. Learn more about verdi presto and controlling your installation [here](https://aiida.readthedocs.io/projects/aiida-core/en/latest/reference/command_line.html#reference-command-line-verdi-presto). 
 
 
 
@@ -237,7 +237,7 @@ non_interactive: false
 
 
 ## Installation of QE of Mac OS 
-### QE for AiidA installation 
+### QE for AiiDA installation 
 
 It can be helpful to make a bash script to install quantum espresso. If you would prefer to make one proceed with the following steps. Note: all of the steps within the script can be called through the command line. 
 
@@ -295,7 +295,7 @@ vi GNdcFortranCompiler.cmake
 
 
 
-## Installing AiidA-Quantumespresso Plugin
+## Installing AiiDA-Quantumespresso Plugin
 Finally, we can install the AiidA plugin for Quantum Espresso. Look [here](https://github.com/aiidateam/aiida-quantumespresso/tree/b79189d7ce4756e846ab39c567ba4681474741ed) for their GitHub page. 
 ```
 pip install aiida-quantumespresso 
