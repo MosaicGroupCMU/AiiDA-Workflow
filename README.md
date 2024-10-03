@@ -332,7 +332,7 @@ SSSP/1.3/PBEsol/precision
 
 
 
-Now, install the blah blah and install the config file to the selected computer
+Now, install install the config file to the selected computer
 
 
 ```
