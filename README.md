@@ -263,7 +263,7 @@ It can be helpful to make a bash script to install quantum espresso. If you woul
 `vi build.sh`
 
 Inside the script, build.sh should look like this:
-```
+```bash
 /!#bin/bash
 
 #set the version of QE that you would like to build with version variable
@@ -292,14 +292,14 @@ make -j all
 ```
 
 Exit the file and convert the build.sh into an excutable. Then execute build.sh
-```
+```console
 chmod +x build.sh
 .build.sh
 ```
 Quantum espresso should find all the necessary files and libraries needed for compiling the code. On a linux you may need to export your libraries BLAS, LAPACK, Scalapack, FTTW. If intel, ompi.
 
 **!!** If you get a compilation error including regarding "foffload"for Mac OS, change into your cmake library and remove the f in front of "foffload". 
-```
+```console
 cd cmake
 vi GNdcFortranCompiler.cmake 
 /%s/foffload/offload/g
@@ -314,7 +314,7 @@ vi GNdcFortranCompiler.cmake
 
 ## Installing AiiDA-Quantumespresso Plugin
 Finally, we can install the AiidA plugin for Quantum Espresso. Look [here](https://github.com/aiidateam/aiida-quantumespresso/tree/b79189d7ce4756e846ab39c567ba4681474741ed) for their GitHub page. 
-```
+```console
 pip install aiida-quantumespresso 
 
 # just to show available workflows for quantum espresso
@@ -335,7 +335,7 @@ Below we install a PseudoDojo pseudopotential family that is from version 0.4, P
 `aiida-pseudo install pseudo-dojo -v 0.4 -x PBEsol -p stringent -f upf -s high`
 
 The same procedure for installing the SSSP pseudopotential family from Materials Cloud. 
-```
+```console
 aiida-pseudo install sssp -h    
 aiida-pseudo install sssp -v 1.3 -x PBEsol -p precision
 ```
@@ -352,7 +352,7 @@ SSSP/1.3/PBEsol/precision
 Now, install install the config file to the selected computer
 
 
-```
+```console
  verdi -p presto computer configure core.ssh roar_basic --config conf_to_roar.yaml
 ```
 Test that AiiDA access the selected computer. This works because there is an established connection open currently but you will need to login within 24 hours. 
@@ -362,14 +362,14 @@ Test that AiiDA access the selected computer. This works because there is an est
 ```
 
 
-```
+```console
 vi code_qe_roar-basic.yaml
 verdi code create core.code.installed --config code_qe_roar-basic.yaml
 ```
 ## Run example
  
 Below is an example "workflow" that will run a quantum espresso calculation with of Si using SSSP pseudopotential family. It will reference your default AiiDA profile loaded in with verdi. 
-```
+```python
 from aiida import load_profile
 from aiida.orm import Code, load_node, load_code, load_group
 from aiida.orm.nodes.data.upf import get_pseudos_from_structure
@@ -451,7 +451,7 @@ group.add_nodes(calc)
 print(f'Created calculation with PK={calc.pk}')
 ````
 To check the status of the process, use below. 
-```
+```console
 verdi process show 190 
 verdi shell
 ```
