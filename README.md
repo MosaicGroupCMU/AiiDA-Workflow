@@ -22,21 +22,21 @@ Aiida has many plugins for popular software including [VASP](https://aiidateam.g
 
 3. Change into what ever folder you would like your aiida installation to be in. Then make an "aiida" directory within that folder.
 
-```
+```shell
 cd 'what/ever/directory/you/want/aiida/to/be/in' 
 
 mkdir aiida
 ```
 
 4. Git clone aiida in that directory. After, change into the newly created directory. 
-```
+```console
 git clone https://github.com/aiidateam/aiida-core.git 
 cd aiida-core
 ```
 
 5. Install aiida within the current directory.
 
-```
+```console
 pip install -e .
 ```
 
@@ -46,7 +46,7 @@ The "-e" means that we would like to make your installation editable. The "." me
 
  RabbitMQ is a messaging and streaming broker. It accepts messages from publishers/applications, routes them and, if there were queues to route to, stores them for consumption or immediately delivers to consumers, if any. It will also retain all sent messages in a queue the interim of a dropped connection. Learn more about Rabbitmq [here](https://www.rabbitmq.com/).
 First, install rabbitmq using homebrew. 
-```
+```console
 brew install rabbitmq
 ```
 Once installed, we have to complete configuring your profile. Open the rabbitmq-env.conf file and copy the path to your config file, mostlikely named "rabbitmq" and can be found under the card/variable "CONFIG_FILE=".
@@ -57,7 +57,7 @@ vi /opt/homebrew/etc/rabbitmq/rabbitmq-env.conf
 ![alt text](image-3.png)
 
 Now, change into the directory where your config file is located. 
-```
+```console
 cd /opt/homebrew/etc/rabbitmq/
 
 vi rabbitmq
@@ -72,13 +72,13 @@ Now, save and exit the file. Restart rabbitmq's services.
 
 
 
-```
+```console
 brew service restart rabbitmq
 ```
 
 Change into rabbitmq's executable directory. On Mac, that is usually in Homebrew's "Cellar" (the directory where all applications/libraries/software within Homebrew is stored).  Finally, execute diagnostics to ensure Rabbitmq's messaging services are all operational. 
 
-```
+```console
 # or what every version of rabbitmq
 cd /opt/homebrew/Cellar/rabbitmq/3.13.7/sbin/ 
 
@@ -92,14 +92,14 @@ cd /opt/homebrew/Cellar/rabbitmq/3.13.7/sbin/
 ### Quick Set up
 If you want a quick setup, call verdi presto and check if the status of the verdi and how it is interfacing with aiida and Rabbbitmq.
 
-```
+```console
 # calling the line below quickly creates and configures a new profile
 verdi presto
 verdi status
 ```
 If you are receiving a warning message and find them annoying, then you can execute the optional code below. 
 
-```
+```console
 verdi config set warnings.rabbitmq_version false
 verdi status
 ```
@@ -107,7 +107,7 @@ verdi status
 
 If you need to configure your verdi config file, navigate to your AiiDA configuration file. 
 
-```
+```console
 cd #into your home directory 
 cd .aiida
 vi config.json
@@ -116,7 +116,7 @@ vi config.json
 
 Make a yaml file for your verdi profile. If you are curious about the database (db) engine and backend look [here](https://pypi.org/project/psycopg2/)
 
-```
+```yaml
 ---
 non_interactive: y
 profile: profile_name
@@ -148,7 +148,7 @@ Make sure to create aiida folder before executing config file. If you need to lo
 
 Below we are creating yaml files for each compute node available at Penn State.
 
-```
+```yaml
 label:roar_basic
 hostname: "submit.hpc.psu.edu"
 description: "Roar Collab  basic nodes at Penn State"
@@ -161,7 +161,7 @@ prepend_text: ""
 append_text: " "
 shebang: "#!/bin/bash"
 ```
-```
+```yaml
 label:roar_standard
 hostname: "submit.hpc.psu.edu"
 description: "Roar Collab  standard nodes at Penn State"
@@ -174,7 +174,7 @@ prepend_text: ""
 append_text: " "
 shebang: "#!/bin/bash"
 ```
-```
+```yaml
 label:roar_high
 hostname: "submit.hpc.psu.edu"
 description: "Roar Collab high nodes at Penn State"
@@ -188,7 +188,7 @@ append_text: " "
 shebang: "#!/bin/bash"
 ```
 **!!** Only use below with GPU enabled codes!
-```
+```yaml
 label:roar_gpu
 hostname: "submit.hpc.psu.edu"
 description: "Roar Collab gpu nodes at Penn State"
@@ -204,15 +204,15 @@ shebang: "#!/bin/bash"
 
 To finish configuring your profile, call verdi computer setup.  
 
-```
-verdi computer setup --config path/to/roar_basic.yaml
+```console
+$ verdi computer setup --config path/to/roar_basic.yaml
 ```
 **Note**: before the computer can be used, it has to be configured with the command:
 
-`verdi -p presto computer configure core.ssh roar_basic`
+`$ verdi -p presto computer configure core.ssh roar_basic`
 
 Create this file to further configure your user information.  
-```
+```yaml
 ---
 username: "YOUR USER NAME"
 port: 22
@@ -233,7 +233,24 @@ safe_interval: 10.0 #minutes
 non_interactive: false
 ```
 
+### Make the code for PW on remote supercomputer
+If you want to execute installed codes on a remote computer you can configure codes to automatically load in your workflow. Here is default yaml file for setting up **installed** codes.
 
+```yaml
+label: pw_environ
+description: "QE v7.2 with Environ v3.1 on Roar"
+default_calc_job_plugin: "quantumespresso.pw"
+use_double_quotes: false
+with_mpi: true
+filepath_executable: /storage/home/cbc5718/work/software/qe/qe-Environ-3.1/qe-7.2/build/bin/pw.x
+computer: roar_basic
+prepend_text: |
+  module purge
+  module load hdf5/1.14.1-2 mkl/2021.4.0 intel/2021.4.0 impi/2021.4.0 cmake/3.26.3 gnuplot/5.2.8
+append_text: "
+```
+
+`verdi code create core.code.installed -n --config=gpu_qe-codepsc.yaml`
 
 
 ## Installation of QE of Mac OS 
