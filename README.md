@@ -211,7 +211,7 @@ $ verdi computer setup --config path/to/roar_basic.yaml
 
 `$ verdi -p presto computer configure core.ssh roar_basic`
 
-Create this file to further configure your user information.  
+Create this file to configure your user information further.  
 ```yaml
 ---
 username: "YOUR USER NAME"
@@ -233,6 +233,8 @@ safe_interval: 10.0 #minutes
 non_interactive: false
 ```
 
+##Test your computer with `verdi computer test roar_basic`. It should pass all 6 tests.
+
 ### Make the code for PW on remote supercomputer
 If you want to execute installed codes on a remote computer you can configure codes to automatically load in your workflow. Here is default yaml file for setting up **installed** codes.
 
@@ -250,7 +252,7 @@ prepend_text: |
 append_text: "
 ```
 
-`verdi code create core.code.installed -n --config=gpu_qe-codepsc.yaml`
+`verdi code create core.code.installed -n --config=pw_environ_code.yaml`
 
 
 ## Installation of QE of Mac OS 
